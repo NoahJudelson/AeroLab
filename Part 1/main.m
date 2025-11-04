@@ -1,5 +1,27 @@
 clc;clear;close all;
-%% task 2 deliverable 2
+
+%% Plots for Task 1, Deliverable 1
+
+[naca0018x, naca0018y] = airfoilgen(0,0,18);
+[naca2418x, naca2418y] = airfoilgen(2,4,18);
+
+
+tiledlayout(1,2)
+
+nexttile;
+plot(naca0018x,naca0018y,'linewidth',2); 
+grid on
+title('NACA 0018')
+ylim([-0.5,0.5]);
+
+nexttile
+plot(naca2418x,naca2418y,'linewidth',2); 
+grid on
+title('NACA 2418')
+ylim([-0.5,0.5]);
+
+
+%% Task 2 Deliverable 2
 [naca0006x, naca0006y] = airfoilgen(0,0,06);
 [naca0012x, naca0012y] = airfoilgen(0,0,12);
 [naca0018x, naca0018y] = airfoilgen(0,0,18);
