@@ -23,16 +23,16 @@ plot(alphas,cl(:,2))
 figure()
 plot(alphas,cl(:,3))
 
-%{
-data = zeros(4,3);
+%% zero-lift angle and lift slope
+data = zeros(2,3);
+
 for i = 1:3
-    negativeAlpha = find((cl(:,i)<0),1,"first");
-din
-
-
+    % estimate zero-lift angle and slope from a linear fit
+    p = polyfit(alphas,cl(:,i),1);
+    y = @(x) p(1)*x + p(2);
+    data(1,i) = fzero(y,0);
+    data(2,i) = p(1);
 end
-%}
-
 
 
 %% task 3
@@ -58,3 +58,13 @@ plot(alphas,cl2(:,2))
 figure()
 plot(alphas,cl2(:,3))
 
+%% zero-lift angle and lift slope
+data2 = zeros(2,3);
+
+for i = 1:3
+    % estimate zero-lift angle and slope from a linear fit
+    p = polyfit(alphas,cl2(:,i),1);
+    y = @(x) p(1)*x + p(2);
+    data2(1,i) = fzero(y,0);
+    data2(2,i) = p(1);
+end
