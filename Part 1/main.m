@@ -20,6 +20,7 @@ grid on
 title('NACA 2418')
 ylim([-0.5,0.5]);
 
+print('NACA 0018 vs. NACA 2418', '-dpng', '-r300')
 
 %% Task 2 Deliverable 2
 [naca0006x, naca0006y] = airfoilgen(0,0,06);
