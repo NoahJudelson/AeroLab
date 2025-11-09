@@ -2,24 +2,31 @@ clc;clear;close all;
 
 %% Plots for Task 1, Deliverable 1
 
-[naca0018x, naca0018y] = airfoilgen(0,0,18);
-[naca2418x, naca2418y] = airfoilgen(2,4,18);
+[naca0018x, naca0018y, xcam0018, ycam0019] = airfoilgen(0,0,18); % generate airfoils to plot
+[naca2418x, naca2418y, xcam2418, ycam2418] = airfoilgen(2,4,18);
 
 
 tiledlayout(1,2)
 
-nexttile;
+nexttile; % Plot airfoils
 plot(naca0018x,naca0018y,'linewidth',2); 
+hold on;
+plot(xcam0018, ycam0018, 'c--', 'LineWidth', 2);
 grid on
 title('NACA 0018')
 ylim([-0.5,0.5]);
+legend('Airfoil', 'Camberline')
 
 nexttile
 plot(naca2418x,naca2418y,'linewidth',2); 
+hold on;
+plot(xcam2418, ycam2418, '')
 grid on
 title('NACA 2418')
 ylim([-0.5,0.5]);
+legend('Airfoil', 'Camberline')
 
+print('NACA 0018 vs. NACA 2418', '-dpng', '-r300')
 
 %% Task 2 Deliverable 2
 [naca0006x, naca0006y] = airfoilgen(0,0,06);

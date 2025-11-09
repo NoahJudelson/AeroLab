@@ -2,8 +2,8 @@ clc;clear;close all;
 
 %% Plots for Task 1, Deliverable 1
 
-[naca0018x, naca0018y] = airfoilgen(0,0,18); % generate airfoils to plot
-[naca2418x, naca2418y] = airfoilgen(2,4,18);
+[naca0018x, naca0018y, ~, ~] = airfoilgen(0,0,18); % generate airfoils to plot
+[naca2418x, naca2418y, xcamber2418, ycamber2418] = airfoilgen(2,4,18);
 
 
 tiledlayout(1,2)
@@ -13,12 +13,16 @@ plot(naca0018x,naca0018y,'linewidth',2);
 grid on
 title('NACA 0018')
 ylim([-0.5,0.5]);
+legend('Airfoil', 'Camberline')
 
 nexttile
 plot(naca2418x,naca2418y,'linewidth',2); 
+hold on;
+plot(xcamber2418, ycamber2418, 'b--', 'LineWidth', 1);
 grid on
 title('NACA 2418')
 ylim([-0.5,0.5]);
+legend('Airfoil', 'Camberline')
 
 print('NACA 0018 vs. NACA 2418', '-dpng', '-r300')
 

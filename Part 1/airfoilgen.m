@@ -1,4 +1,4 @@
-function [x, y] = airfoilgen(m_0, p_0, t_0)
+function [x, y, x_c, y_c] = airfoilgen(m_0, p_0, t_0)
 
 m_use = m_0 / 100; % create useful mpt values for computations
 p_use = p_0 / 10;
@@ -7,6 +7,7 @@ t_use = t_0 / 100;
 c = 1; % normalized chord length
 
 x = linspace(0, c, 1000); % values along chord spaced out
+x_c = x; % values for camber line
 
 y_t = 5*t_use * (0.2969*sqrt(x./c) - 0.1260*(x./c) - 0.3516*(x./c).^2 ...
     + 0.2843*(x./c).^3 - 0.1036*(x./c).^4 ); % thickness distribution equation
@@ -22,6 +23,7 @@ for i = 1:length(x) % iterates through piecewise function, also calculates xi va
         y_c(i) = m_use/((1-p_use)^2) * ( (1 - 2*p_use) + 2*p_use*(x(i)/c) - (x(i)/c).^2 );
         dyc_dx(i) = (2*m_use/((1-p_use)^2)) * (p_use/c - x(i)/c^2);
     end
+
 end
 
 xi = atan(dyc_dx);
