@@ -26,7 +26,8 @@ title('NACA 2418')
 ylim([-0.5,0.5]);
 legend('Airfoil', 'Camberline')
 
-% print('NACA0018_vs_NACA2418', '-dpng', '-r300')
+
+print('NACA0018_vs_NACA2418', '-dpng', '-r300')
 
 %% Task 2 Deliverable 2
 [naca0006x, naca0006y] = airfoilgen(0,0,06);
@@ -41,7 +42,7 @@ for i = alphas
     cl(i+6,2) = Vortex_Panel(naca0012x,naca0012y,i);
     cl(i+6,3) = Vortex_Panel(naca0018x,naca0018y,i);
 end
-%{
+
 figure()
 plot(alphas,cl(:,1))
 ylim([-1 3])
@@ -49,7 +50,7 @@ title('NACA 0006')
 xlabel('Angle of Attack (deg)')
 ylabel('c_l')
 print('naca0006','-dpng')
-%}
+
 figure()
 plot(alphas,cl(:,2))
 ylim([-1 3])
