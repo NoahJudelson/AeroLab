@@ -48,8 +48,8 @@ for i = 2:N
     delta = delta + n*((A(i)/A(1))^2);
 end
 
-c_Di = ((c_L*c_L)/(pi*AR)) * (1+delta);
-e = 1/(1+delta);
+cD_i = (c_L*c_L)/(pi*AR)
+
 
 end
 
