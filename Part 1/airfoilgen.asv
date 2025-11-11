@@ -6,7 +6,7 @@ t_use = t_0 / 100;
 
 c = 1; % normalized chord length
 
-x = linspace(0, c, N); % values along chord spaced out
+x = linspace(0, c, 1000); % values along chord spaced out
 x_c = x; % values for camber line
 
 y_t = 5*t_use * (0.2969*sqrt(x./c) - 0.1260*(x./c) - 0.3516*(x./c).^2 ...
