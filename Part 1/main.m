@@ -31,7 +31,8 @@ xlabel('Normalized Chord')
 ylabel('Normalized Thickness')
 
 
-% print('NACA0018_vs_NACA2418', '-dpng', '-r300')
+
+print('NACA0018_vs_NACA2418', '-dpng', '-r300')
 
 %% Task 2 Deliverable 2
 % [naca0006x, naca0006y] = airfoilgen(0,0,06);
