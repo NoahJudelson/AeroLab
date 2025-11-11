@@ -1,0 +1,13 @@
+clc;clear;close all;
+
+a0_t = 2*pi;
+a0_r = 2*pi;
+c_t = linspace(0,1);
+c_r = 1;
+aero_t = 0; 
+aero_r = 0;
+geo_t = 0;
+geo_r = 0;
+N = 10;
+
+for i = 4:2:10
