@@ -10,7 +10,9 @@ tiledlayout(1,2)
 
 nexttile; % Plot airfoils
 plot(naca0018x,naca0018y,'linewidth',2); 
+hold on
 grid on
+yline(0, 'b--', 'LineWidth', 1);
 title('NACA 0018')
 ylim([-0.5,0.5]);
 legend('Airfoil', 'Camberline')
@@ -35,20 +37,34 @@ legend('Airfoil', 'Camberline')
 alphas = -5:20;
 cl = zeros(length(alphas),3);
 for i = alphas
-    cl(i+5,1) = Vortex_Panel(naca0006x,naca0006y,i);
-    cl(i+5,2) = Vortex_Panel(naca0012x,naca0012y,i);
-    cl(i+5,3) = Vortex_Panel(naca0018x,naca0018y,i);
+    cl(i+6,1) = Vortex_Panel(naca0006x,naca0006y,i);
+    cl(i+6,2) = Vortex_Panel(naca0012x,naca0012y,i);
+    cl(i+6,3) = Vortex_Panel(naca0018x,naca0018y,i);
 end
-
+%{
 figure()
 plot(alphas,cl(:,1))
-
-
+ylim([-1 3])
+title('NACA 0006')
+xlabel('Angle of Attack (deg)')
+ylabel('c_l')
+print('naca0006','-dpng')
+%}
 figure()
 plot(alphas,cl(:,2))
+ylim([-1 3])
+title('NACA 0012')
+xlabel('Angle of Attack (deg)')
+ylabel('c_l')
+print('naca0012','-dpng')
 
 figure()
 plot(alphas,cl(:,3))
+ylim([-1 3])
+title('NACA 0018')
+xlabel('Angle of Attack (deg)')
+ylabel('c_l')
+print('naca0018','-dpng')
 
 %% zero-lift angle and lift slope
 data = zeros(2,3);
@@ -64,26 +80,42 @@ end
 
 %% task 3
 [naca0012x, naca0012y] = airfoilgen(0,0,12);
-[naca02412x, naca02412y] = airfoilgen(2,4,12);
+[naca2412x, naca2412y] = airfoilgen(2,4,12);
 [naca4412x, naca4412y] = airfoilgen(4,4,12);
 
 alphas = -5:20;
 cl2 = zeros(length(alphas),3);
 for i = alphas
-    cl2(i+5,1) = Vortex_Panel(naca0012x,naca0012y,i);
-    cl2(i+5,2) = Vortex_Panel(naca2412x,naca2412y,i);
-    cl2(i+5,3) = Vortex_Panel(naca4412x,naca4412y,i);
+    cl2(i+6,1) = Vortex_Panel(naca0012x,naca0012y,i);
+    cl2(i+6,2) = Vortex_Panel(naca2412x,naca2412y,i);
+    cl2(i+6,3) = Vortex_Panel(naca4412x,naca4412y,i);
 end
 
+%{
 figure()
 plot(alphas,cl2(:,1))
+ylim([-1 3])
+title('NACA 0012')
+xlabel('Angle of Attack (deg)')
+ylabel('c_l')
+%}
 
 
 figure()
 plot(alphas,cl2(:,2))
+ylim([-1 3])
+title('NACA 2412')
+xlabel('Angle of Attack (deg)')
+ylabel('c_l')
+print('naca2412','-dpng')
 
 figure()
 plot(alphas,cl2(:,3))
+ylim([-1 3])
+title('NACA 4412')
+xlabel('Angle of Attack (deg)')
+ylabel('c_l')
+print('naca4412','-dpng')
 
 %% zero-lift angle and lift slope
 data2 = zeros(2,3);
