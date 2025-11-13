@@ -6,7 +6,7 @@ clc; clear; close all;
 
 N = 1000;
 
-imgPath   = 'NACA0018.png';
+imgPath   = 'NACA0018_s.png';
 [naca0018x , naca0018y] = digitize2D(imgPath, [0 1], 0.18, N);% NACA 0018
 [naca0012x, naca0012y] = airfoilgen(0,0,12, N);% NACA 0012
 [naca0006x, naca0006y] = airfoilgen(0,0,06, N);%NACA 0006
