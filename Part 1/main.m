@@ -6,7 +6,8 @@ clc; clear; close all;
 
 N = 1000;
 
-[naca0018x, naca0018y, ~, ~] = airfoilgen(0,0,18, N);         % NACA 0018
+imgPath   = 'NACA0018.png';
+[naca0018x , naca0018y] = digitize2D(imgPath, [0 1], 0.18, N);
 [naca2418x, naca2418y, xcamber2418, ycamber2418] = airfoilgen(2,4,18, N); % NACA 2418
 [naca4412x, naca4412y, xcamber4412, ycamber4412] = airfoilgen(4,4,12,N); % NACA 4412
 
@@ -78,9 +79,6 @@ print('ConvStudy', '-dpng', '-r300')
 
 %% Task 2 Deliverable 2
 N = 1000;
-
-imgPath   = 'NACA0018.png';
-[naca0018x , naca0018y] = digitize2D(imgPath, [0 1], 0.18, N);
 
 [naca0006x, naca0006y] = airfoilgen(0,0,06, N);
 [naca0012x, naca0012y] = airfoilgen(0,0,12, N);
@@ -241,6 +239,7 @@ a0_rad      = 2*pi;
 a0_per_deg  = a0_rad * (pi/180);    
 alphaL0_deg = alphaL0_rad * 180/pi;
 end
+
 
 
 
