@@ -79,7 +79,7 @@ print('ConvStudy', '-dpng', '-r300')
 %% Task 2 Deliverable 2
 N = 1000;
 
-imgPath   = 'NACA0018.png';
+imgPath   = 'NACA0018_s.png';
 [naca0018x , naca0018y] = digitize2D(imgPath, [0 1], 0.18, N);
 
 [naca0006x, naca0006y] = airfoilgen(0,0,06, N);
