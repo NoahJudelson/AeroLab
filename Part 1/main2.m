@@ -22,9 +22,10 @@ for i = 4:2:10
     hold on
     plot(c_t,delta);
     hold on
-    xlabel('c_t/c_r')
-    ylabel('\delta')
+    xlabel('Taper Ratio (c_t/c_r)')
+    ylabel('Induced Drag Factor (\delta)')
 
 end
 
 legend('AR = 4','AR = 6','AR = 8','AR = 10')
+print('Part 2 plot','-dpng')
