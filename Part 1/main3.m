@@ -93,26 +93,29 @@ CD_model = cd0 + k * CL_model.^2;
 %% 2.4 Plot drag polar (c_d vs C_l) and c_d vs alpha
 
 % Drag polar: c_d vs C_l
-CL_line = linspace(min(CL_exp), max(CL_exp), 200);
+CL_line = linspace(min(CL_exp), max(CL_exp), 41);
 CD_line = cd0 + k * CL_line.^2;
 
-figure;
-plot(CL_exp, CD_exp, 'o', 'DisplayName','Experimental data'); hold on;
-plot(CL_line, CD_line, '-', 'LineWidth',1.5, 'DisplayName','Quadratic fit');
-grid on; box on;
-xlabel('c_l'); ylabel('c_d');
-title('NACA 0012 Tip Section Drag Polar');
-legend('Location','best');
-print('part3task2-1','-dpng');
+% figure;
+% plot(CL_exp, CD_exp, 'o', 'DisplayName','Experimental data'); hold on;
+% plot(CL_line, CD_line, '-', 'LineWidth',1.5, 'DisplayName','Quadratic fit');
+% grid on; box on;
+% xlabel('c_l'); ylabel('c_d');
+% title('NACA 0012 Tip Section Drag Polar');
+% legend('Location','best');
+% print('part3task2-1','-dpng');
 
 % c_d vs alpha
 figure;
-plot(alpha_model_deg, CD_model, 'LineWidth',1.5);
+hold on;
+plot(alpha_model_deg, CD_model, 'LineWidth',1.5, 'DisplayName','Model data');
+plot(alpha_model_deg, CD_line, 'LineWidth',1.5, 'DisplayName','Experimental data')
 grid on; box on;
 xlabel('\alpha_{tip} (deg)');
 ylabel('c_d');
-title('NACA 0012 Tip Section: c_d vs Angle of Attack');
-print('part3task2-2','-dpng');
+legend('Location','best');
+title('NACA 0012 Tip Section: c_d vs Angle of Attack for Model and Experimental Data');
+print('part3task2','-dpng');
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Part 3 Task 3: Effect of Angle of Attack on C_D (Wing) %%
@@ -167,7 +170,7 @@ print('part3task3','-dpng');
 
 W = 2500;                     % weight (lb)
 rho = 0.001756;               % slug/ft^3 at 10,000 ft (standard)
-V_knots = 40:1:140;           % airspeed range
+V_knots = 60:1:140;           % airspeed range
 V_ft_s = V_knots * 1.68781;   % convert to ft/s
 
 T_required = zeros(size(V_ft_s));
@@ -182,7 +185,7 @@ for i = 1:numel(V_ft_s)
     alpha_req_rad = CL_req / a0_t + alphaL0_t;
     alpha_req_deg = rad2deg(alpha_req_rad);
 
-    % Bound angle to model limits
+    %Bound angle to model limits
     alpha_req_deg = max(min(alpha_req_deg, max(alpha_tip_deg)), min(alpha_tip_deg));
 
     % ---- 3. Interpolate drag coefficients from Task 3 ----
