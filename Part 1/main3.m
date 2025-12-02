@@ -60,14 +60,14 @@ print('part3task1','-dpng');
 % as a function of angle of attack using Theory of Wing Sections data.
 
 %% 2.1 Experimental drag-polar data for NACA 0012 (TIP)
-% Replace the example numbers with actual (C_l, C_d) pairs
-% read from Theory of Wing Sections at the correct Reynolds number.
+% CL_exp = [ ...
+%     -0.4  -0.2   0.0   0.2   0.4   0.6   0.8   1.0   1.2];      
+% CD_exp = [ ...
+%      0.015 0.012 0.010 0.0105 0.012 0.014 0.017 0.021 0.026];   
 
-CL_exp = [ ...
-    -0.4  -0.2   0.0   0.2   0.4   0.6   0.8   1.0   1.2];      % <-- EDIT
-CD_exp = [ ...
-     0.015 0.012 0.010 0.0105 0.012 0.014 0.017 0.021 0.026];   % <-- EDIT
-
+CL_exp = [-0.4  -0.2  0.0  0.2  0.4  0.6  0.8  1.0  1.2];
+CD_exp = [0.0065  0.006  0.006  0.0061  0.007  0.0075  0.008  0.01 0.012];
+ 
 CL_exp = CL_exp(:);
 CD_exp = CD_exp(:);
 
