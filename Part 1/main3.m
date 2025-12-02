@@ -57,64 +57,53 @@ print('part3task1','-dpng');
 %% Part 3 Task 2: Estimation of Profile Drag c_D0 %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Model sectional drag coefficient c_d for the NACA 0012 tip airfoil
-% as a function of angle of attack using Theory of Wing Sections data.
+% as a function of angle of attack, using Theory of Wing Sections data.
 
 %% 2.1 Experimental drag-polar data for NACA 0012 (TIP)
-% CL_exp = [ ...
-%     -0.4  -0.2   0.0   0.2   0.4   0.6   0.8   1.0   1.2];      
-% CD_exp = [ ...
-%      0.015 0.012 0.010 0.0105 0.012 0.014 0.017 0.021 0.026];   
+% Replace with data extracted from the NACA 0012 drag polar figure.
 
 CL_exp = [-0.4  -0.2  0.0  0.2  0.4  0.6  0.8  1.0  1.2];
 CD_exp = [0.0065  0.006  0.006  0.0061  0.007  0.0075  0.008  0.01 0.012];
- 
-CL_exp = CL_exp(:);
+
+CL_exp = CL_exp(:);    % ensure column
 CD_exp = CD_exp(:);
 
 %% 2.2 Fit quadratic drag polar: c_d = c_d0 + k * C_l^2
 
-X = [ones(size(CL_exp)), CL_exp.^2];   % [1, C_l^2]
+X = [ones(size(CL_exp)), CL_exp.^2];   % design matrix [1, C_l^2]
 beta = X \ CD_exp;                     % least-squares fit
 
-cd0 = beta(1);                         % profile drag at C_l = 0
+cd0 = beta(1);                         % c_d at zero lift
 k    = beta(2);                        % quadratic coefficient
 
-fprintf('Tip drag polar: c_d = %.5f + %.5f * C_l^2\n', cd0, k);
+fprintf('Tip drag polar fit: c_d = %.5f + %.5f * C_l^2\n', cd0, k);
 
-%% 2.3 Build c_d(alpha) model using the tip lift-curve from Task 1
+%% 2.3 Build c_d(alpha) MODEL using the lift curve from Task 1
 
-alpha_model_deg = -5:0.5:15;           % AoA range for the model (deg)
+alpha_model_deg = -5:0.5:15;           % angle of attack range
 alpha_model_rad = deg2rad(alpha_model_deg);
 
-% Use previously found a0_t and alphaL0_t from Task 1:
-CL_model = a0_t * (alpha_model_rad - alphaL0_t);
-CD_model = cd0 + k * CL_model.^2;
+% a0_t and alphaL0_t were computed in Task 1
+CL_model = a0_t * (alpha_model_rad - alphaL0_t);   % predicted sectional C_l(α)
+CD_model = cd0 + k * CL_model.^2;                  % quadratic c_d(α) model
 
-%% 2.4 Plot drag polar (c_d vs C_l) and c_d vs alpha
+%% 2.4 Convert EXPERIMENTAL C_l to EXPERIMENTAL α using same lift curve
 
-% Drag polar: c_d vs C_l
-CL_line = linspace(min(CL_exp), max(CL_exp), 41);
-CD_line = cd0 + k * CL_line.^2;
+alpha_exp_rad = CL_exp ./ a0_t + alphaL0_t;
+alpha_exp_deg = rad2deg(alpha_exp_rad);
 
-% figure;
-% plot(CL_exp, CD_exp, 'o', 'DisplayName','Experimental data'); hold on;
-% plot(CL_line, CD_line, '-', 'LineWidth',1.5, 'DisplayName','Quadratic fit');
-% grid on; box on;
-% xlabel('c_l'); ylabel('c_d');
-% title('NACA 0012 Tip Section Drag Polar');
-% legend('Location','best');
-% print('part3task2-1','-dpng');
+%% 2.5 Plot c_d vs alpha (MODEL + EXPERIMENTAL)
 
-% c_d vs alpha
 figure;
 hold on;
-plot(alpha_model_deg, CD_model, 'LineWidth',1.5, 'DisplayName','Model data');
-plot(alpha_model_deg, CD_line, 'LineWidth',1.5, 'DisplayName','Experimental data')
+plot(alpha_model_deg, CD_model, 'LineWidth',1.6, 'DisplayName','Model c_d(\alpha)');
+plot(alpha_exp_deg, CD_exp, 'o', 'MarkerSize',6, ...
+     'DisplayName','Experimental c_d(\alpha)');
 grid on; box on;
 xlabel('\alpha_{tip} (deg)');
 ylabel('c_d');
+title('NACA 0012 Tip Section: Profile Drag Coefficient vs Angle of Attack');
 legend('Location','best');
-title('NACA 0012 Tip Section: c_d vs Angle of Attack for Model and Experimental Data');
 print('part3task2','-dpng');
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -170,7 +159,7 @@ print('part3task3','-dpng');
 
 W = 2500;                     % weight (lb)
 rho = 0.001756;               % slug/ft^3 at 10,000 ft (standard)
-V_knots = 60:1:140;           % airspeed range
+V_knots = 40:1:140;           % airspeed range
 V_ft_s = V_knots * 1.68781;   % convert to ft/s
 
 T_required = zeros(size(V_ft_s));
@@ -185,7 +174,7 @@ for i = 1:numel(V_ft_s)
     alpha_req_rad = CL_req / a0_t + alphaL0_t;
     alpha_req_deg = rad2deg(alpha_req_rad);
 
-    %Bound angle to model limits
+    % Bound angle to model limits
     alpha_req_deg = max(min(alpha_req_deg, max(alpha_tip_deg)), min(alpha_tip_deg));
 
     % ---- 3. Interpolate drag coefficients from Task 3 ----
@@ -201,3 +190,4 @@ plot(V_knots, T_required, 'LineWidth',1.5);
 grid on; xlabel('Airspeed (knots)'); ylabel('Thrust Required (lb)');
 title('Cessna 180: Thrust Required for Steady, Level Flight');
 print('part3task4','-dpng');
+
