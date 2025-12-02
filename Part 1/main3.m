@@ -50,6 +50,7 @@ figure;
 plot(alpha_tip_deg, CL_wing, 'LineWidth', 1.5);
 grid on; xlabel('\alpha_{tip} (deg)'); ylabel('C_L');
 title('Cessna 180: C_L vs Tip Angle of Attack');
+print('part3task1','-dpng');
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -102,6 +103,7 @@ grid on; box on;
 xlabel('c_l'); ylabel('c_d');
 title('NACA 0012 Tip Section Drag Polar');
 legend('Location','best');
+print('part3task2-1','-dpng');
 
 % c_d vs alpha
 figure;
@@ -110,6 +112,7 @@ grid on; box on;
 xlabel('\alpha_{tip} (deg)');
 ylabel('c_d');
 title('NACA 0012 Tip Section: c_d vs Angle of Attack');
+print('part3task2-2','-dpng');
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Part 3 Task 3: Effect of Angle of Attack on C_D (Wing) %%
@@ -127,25 +130,25 @@ CD_total = zeros(size(alpha_deg));
 % Wing planform area (ft^2 → convert to m^2 only if needed later)
 S = (c_r + c_t)/2 * b;
 
-for k = 1:numel(alpha_deg)
+for n = 1:numel(alpha_deg)
 
     % ---- 1. Induced drag coefficient from PLLT ----
-    geo_t = deg2rad(alpha_deg(k));
+    geo_t = deg2rad(alpha_deg(n));
     geo_r = geo_t + deg2rad(twist_root_minus_tip);
 
     [~, CL_here, CDi_here] = PLLT(b, a0_t, a0_r, c_t, c_r, ...
                                   alphaL0_t, alphaL0_r, ...
                                   geo_t, geo_r, N_terms);
 
-    CDi_wing(k) = CDi_here;
+    CDi_wing(n) = CDi_here;
 
     % ---- 2. Profile drag coefficient using tip-section model ----
     % From Task 2: c_d = cd0 + k * c_l^2
     CL_tip_local = a0_t * (geo_t - alphaL0_t);   % sectional CL at tip
-    CD0_wing(k) = cd0 + k * CL_tip_local.^2;
+    CD0_wing(n) = cd0 + k * CL_tip_local.^2;
 
     % ---- 3. Total drag coefficient ----
-    CD_total(k) = CDi_wing(k) + CD0_wing(k);
+    CD_total(n) = CDi_wing(n) + CD0_wing(n);
 end
 
 % ---- Plot for Task 3 ----
@@ -156,6 +159,7 @@ plot(alpha_deg, CD0_wing, 'b-.', 'LineWidth',1.5, 'DisplayName','Profile C_{D,0}
 grid on; xlabel('\alpha (deg)'); ylabel('C_D');
 title('Cessna 180: Drag Coefficients vs Angle of Attack');
 legend('Location','best');
+print('part3task3','-dpng');
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Part 3 Task 4: Effect of Airspeed on Thrust Required (Wing) %%
@@ -193,3 +197,4 @@ figure;
 plot(V_knots, T_required, 'LineWidth',1.5);
 grid on; xlabel('Airspeed (knots)'); ylabel('Thrust Required (lb)');
 title('Cessna 180: Thrust Required for Steady, Level Flight');
+print('part3task4','-dpng');
